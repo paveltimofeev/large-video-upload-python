@@ -4,7 +4,8 @@
 #   export CONSUMER_SECRET=...
 #   export ACCESS_TOKEN=...
 #   export ACCESS_TOKEN_SECRET=...
-#   async-upload.py path/to/video/file.ext
+#   async-upload.py mediatype path/to/video/file.ext
+#   async-upload.py video/mp4 ~/myvideo.mp4
 #---------------------------------------------------#
 
 import os
@@ -19,12 +20,13 @@ from requests_oauthlib import OAuth1
 MEDIA_ENDPOINT_URL = 'https://upload.twitter.com/1.1/media/upload.json'
 POST_TWEET_URL = 'https://api.twitter.com/1.1/statuses/update.json'
 
-CONSUMER_KEY = 'your-consumer-key'
-CONSUMER_SECRET = 'your-consumer-secret'
-ACCESS_TOKEN = 'your-access-token'
-ACCESS_TOKEN_SECRET = 'your-access-secret'
+CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
+CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
+ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
 
-VIDEO_FILENAME = 'path/to/video/file'
+MEDIA_TYPE = sys.argv[1]
+VIDEO_FILENAME = sys.argv[2]
 
 
 oauth = OAuth1(CONSUMER_KEY,
@@ -53,7 +55,7 @@ class VideoTweet(object):
 
     request_data = {
       'command': 'INIT',
-      'media_type': 'video/mp4',
+      'media_type': MEDIA_TYPE,
       'total_bytes': self.total_bytes,
       'media_category': 'tweet_video'
     }
