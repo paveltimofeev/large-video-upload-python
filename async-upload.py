@@ -22,11 +22,18 @@ POST_TWEET_URL = 'https://api.twitter.com/1.1/statuses/update.json'
 
 CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
 CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
-ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
-ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
+ACCESS_TOKEN = os.environ.get("ACCESS_KEY")
+ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_SECRET")
 
 MEDIA_TYPE = sys.argv[1]
 VIDEO_FILENAME = sys.argv[2]
+
+print( CONSUMER_KEY )
+print( CONSUMER_SECRET )
+print( ACCESS_TOKEN )
+print( ACCESS_TOKEN_SECRET )
+print( MEDIA_TYPE )
+print( VIDEO_FILENAME )
 
 
 oauth = OAuth1(CONSUMER_KEY,
@@ -134,6 +141,7 @@ class VideoTweet(object):
     state = self.processing_info['state']
 
     print('Media processing status is %s ' % state)
+    print( str( self.processing_info ) )
 
     if state == u'succeeded':
       return
